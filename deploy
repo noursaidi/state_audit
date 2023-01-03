@@ -1,0 +1,50 @@
+#!/bin/bash
+
+if (( $# < 4 )); then
+    echo $0 PROJECT_ID DATASET_ID LOCATION TRIGGER_TOPIC [--drop]
+    exit
+fi
+
+PROJECT_ID=$1
+DATASET_ID=$2
+LOCATION=$3
+TRIGGER_TOPIC=$4
+shift 4
+
+FUNCTION_NAME=state_audit
+TABLE=state_audit
+
+BUCKET=$PROJECT_ID-iot-messages
+
+if [[ $1 == "--drop" ]]; then
+    shift 1
+    echo "WARNING: Dropping tables in 5 seconds. Data will be permanently lost"
+    echo $PROJECT_ID:$DATASET_ID.$TABLE
+    sleep 5 && echo "Deleting tables " && sleep 2
+    bq rm -t -f $PROJECT_ID:$DATASET_ID.$TABLE
+fi
+
+# Create Dataset
+bq --location=$LOCATION mk \
+    --dataset \
+    $PROJECT_ID:$DATASET_ID
+
+# Create Messsages table
+bq mk \
+    --table \
+    --time_partitioning_field timestamp \
+    --time_partitioning_type DAY \
+    --clustering_fields device_registry_id,device_id \
+    $PROJECT_ID:$DATASET_ID.$TABLE \
+    schema.json
+
+# Deploy Cloud Function
+gcloud functions deploy $FUNCTION_NAME \
+    --trigger-topic=$TRIGGER_TOPIC \
+    --entry-point=hello_pubsub \
+    --runtime python310 \
+    --project=$PROJECT_ID \
+    --source=src/ \
+    --set-env-vars PROJECT_ID=$PROJECT_ID,DATASET_ID=$DATASET_ID,TABLE=$TABLE
+
+echo Done

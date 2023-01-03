@@ -1,0 +1,92 @@
+[
+  {
+    "mode": "NULLABLE",
+    "name": "timestamp",
+    "type": "TIMESTAMP"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "device_id",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "device_registry_id",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "device_numeric_id",
+    "type": "INTEGER"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "gateway_id",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "ip_device",
+    "type": "INTEGER"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "message_hash",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "last_config",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "has_make_model",
+    "type": "INTEGER"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "has_software",
+    "type": "INTEGER"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "has_points",
+    "type": "INTEGER"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "has_units",
+    "type": "INTEGER"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "has_status",
+    "type": "INTEGER"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "make",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "model",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "software",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "units",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "error",
+    "type": "INTEGER"
+  }
+]
