@@ -94,6 +94,8 @@ class State:
             yield (k, *p)
 
   def normalise(self):
+    self.json_normalised['timestamp'] = 'removed'
+    """
     for a in self.iterate_self(self.json):
       path = list(a)
       value = path[-1]
@@ -105,6 +107,7 @@ class State:
         for key in reversed(path[:-2]):
           update_dict = {key: update_dict}
         self.json_normalised.update(update_dict)
+    """
 
   def get_units(self):
     points = self.json.get('pointset', {}).get('points', {})
@@ -142,7 +145,7 @@ def hello_pubsub(event, context):
 
   device_id = event['attributes'].get('deviceId')
   registry_id = event['attributes'].get('deviceRegistryId')
-  gateway_id = event['attributes'].get('deviceRegistryId')
+  gateway_id = event['attributes'].get('gatewayId')
   device_numeric_id = event['attributes'].get('deviceNumId')
 
   ip_device = True if gateway_id else False
