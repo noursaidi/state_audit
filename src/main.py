@@ -182,10 +182,6 @@ def hello_pubsub(event, context):
     }
 
   errors = client.insert_rows_json(TABLE_ID, [row_to_insert])  # Make an API request.
-  if errors == []:
-    print("New rows have been added.")
-    print(state.json)
-    print(state.hash)
-  else:
-    print("Encountered errors while inserting rows: {}".format(errors))
+  if errors != []:
+    raise Exception("Encountered errors while inserting rows: {}".format(errors))
   
