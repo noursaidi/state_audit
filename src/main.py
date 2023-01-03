@@ -146,7 +146,7 @@ def hello_pubsub(event, context):
   device_id = event['attributes'].get('deviceId')
   registry_id = event['attributes'].get('deviceRegistryId')
   gateway_id = event['attributes'].get('deviceRegistryId')
-  device_numeric_id = event['attributes'].get('deviceNumericId')
+  device_numeric_id = event['attributes'].get('deviceNumId')
 
   ip_device = True if gateway_id else False
 
