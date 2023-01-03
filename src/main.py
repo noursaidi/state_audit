@@ -79,22 +79,19 @@ class State:
       return legacy_version
     return json.dumps(self.json.get('system', {}).get('software'),sort_keys=True)
 
-
   def check_status(self):
     for a in self.iterate_self(self.json):
       path = list(a)
-      key = path[-2]
-      if key == 'status' or key == 'statuses':
+      if 'status' in path or 'statuses' in path :
         return True
     return False
   
   def iterate_self(self, start):
      for k, v in start.items():
+      yield (k, v)
       if isinstance(v, dict):
         for p in self.iterate_self(v):
             yield (k, *p)
-      else:
-        yield (k, v)
 
   def normalise(self):
     for a in self.iterate_self(self.json):
@@ -187,6 +184,8 @@ def hello_pubsub(event, context):
   errors = client.insert_rows_json(TABLE_ID, [row_to_insert])  # Make an API request.
   if errors == []:
     print("New rows have been added.")
+    print(state.json)
+    print(state.hash)
   else:
     print("Encountered errors while inserting rows: {}".format(errors))
   
