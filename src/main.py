@@ -119,7 +119,7 @@ def hello_pubsub(event, context):
   payload = base64.b64decode(event['data']).decode('utf-8')
   try:
     state = State(payload)
-    console.log(state.software)
+    print(state.software)
     sha256 = state.hash
     last_config = state.last_config
     has_units = state.has_units
