@@ -74,7 +74,7 @@ class State:
     return hardware
 
   def get_software(self):
-    legacy_version = self.json.get('system', {}).get('firmware', {}).get('version')
+    legacy_version = str(self.json.get('system', {}).get('firmware', {}).get('version'))
     if legacy_version:
       return legacy_version
     return json.dumps(self.json.get('system', {}).get('software'),sort_keys=True)
@@ -119,7 +119,6 @@ def hello_pubsub(event, context):
   payload = base64.b64decode(event['data']).decode('utf-8')
   try:
     state = State(payload)
-    print(state.software)
     sha256 = state.hash
     last_config = state.last_config
     has_units = state.has_units
