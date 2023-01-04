@@ -30,6 +30,7 @@ class State:
     # Normalise and hash
     self.json_normalised = copy.deepcopy(self.json)
     self.normalise_key(self.json_normalised, 'timestamp', 'removed')
+    self.normalise_key(self.json_normalised, 'state_etag', 'removed') # b/c delta 
     self.normalised = json.dumps(self.json_normalised, sort_keys=True)
     self.hash = hashlib.sha256(self.normalised.encode('utf-8')).hexdigest()
 
