@@ -29,7 +29,7 @@ class State:
 
     # Normalise and hash
     self.json_normalised = copy.deepcopy(self.json)
-    self.normalise()
+    self.normalise_key(self.json_normalised, 'timestamp', 'removed')
     self.normalised = json.dumps(self.json_normalised, sort_keys=True)
     self.hash = hashlib.sha256(self.normalised.encode('utf-8')).hexdigest()
 
@@ -93,21 +93,12 @@ class State:
         for p in self.iterate_self(v):
             yield (k, *p)
 
-  def normalise(self):
-    self.json_normalised['timestamp'] = 'removed'
-    """
-    for a in self.iterate_self(self.json):
-      path = list(a)
-      value = path[-1]
-      deepest_key = path[-2]
-      if deepest_key == 'timestamp':
-        update_value = 'removed'
-        update_dict = {}
-        update_dict[deepest_key] = update_value
-        for key in reversed(path[:-2]):
-          update_dict = {key: update_dict}
-        self.json_normalised.update(update_dict)
-    """
+  def normalise_key(self, target, key, value):
+    for k, v in target.items():
+      if key == k:
+        target[k] = value
+      elif isinstance(v, dict):
+        self.normalise_key(v, key, value)
 
   def get_units(self):
     points = self.json.get('pointset', {}).get('points', {})
@@ -136,6 +127,8 @@ def hello_pubsub(event, context):
     has_make_model = state.has_make_model
     make = state.make
     model = state.model
+    sku = state.sku
+    rev = state.rev
     software = state.software
     has_software = state.has_software
     units = ",".join(state.units)
@@ -179,6 +172,8 @@ def hello_pubsub(event, context):
         "has_status": 1 if has_status else 0,
         "make": make,#
         "model": model,#
+        "sku": sku,#
+        "rev": rev,#
         "software": software,#
         "units": units,
         "error": 0

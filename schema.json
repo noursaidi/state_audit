@@ -76,6 +76,16 @@
   },
   {
     "mode": "NULLABLE",
+    "name": "sku",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "rev",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
     "name": "software",
     "type": "STRING"
   },
