@@ -66,6 +66,11 @@
   },
   {
     "mode": "NULLABLE",
+    "name": "serial",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
     "name": "make",
     "type": "STRING"
   },

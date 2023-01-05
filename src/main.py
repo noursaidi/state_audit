@@ -26,6 +26,8 @@ class State:
 
     # Last Config
     self.last_config = self.json.get('system', {}).get('last_config', '')
+    
+    self.serial = self.json.get('system', {}).get('serial_no', '')
 
     # Normalise and hash
     self.json_normalised = copy.deepcopy(self.json)
@@ -132,7 +134,8 @@ def hello_pubsub(event, context):
     software = state.software
     has_software = state.has_software
     units = ",".join(state.units)
-    has_points = state.has_points
+    has_points = state.has_points,
+    serial = state.serial
   except:
     error = True
 
@@ -170,6 +173,7 @@ def hello_pubsub(event, context):
         "has_points": 1 if has_points else 0,#
         "has_units": 1 if has_units else 0, #
         "has_status": 1 if has_status else 0,
+        "serial": serial,
         "make": make,#
         "model": model,#
         "sku": sku,#
