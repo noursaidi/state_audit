@@ -106,7 +106,7 @@ class State:
   def get_units(self):
     points = self.json.get('pointset', {}).get('points', {})
     units = []
-    for point in points:
+    for point_name, point in points.items():
       if 'units' in point:
         units.append(point['units'])
     return units
