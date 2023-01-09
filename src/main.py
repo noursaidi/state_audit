@@ -77,10 +77,10 @@ class State:
     return hardware
 
   def get_software(self):
-    legacy_version = str(self.json.get('system', {}).get('firmware', {}).get('version'))
+    legacy_version = self.json.get('system', {}).get('firmware', {}).get('version')
     if legacy_version:
-      return legacy_version
-    return json.dumps(self.json.get('system', {}).get('software'),sort_keys=True)
+      return str(legacy_version)
+    return json.dumps(self.json.get('system', {}).get('software', {}),sort_keys=True)
 
   def check_status(self):
     for a in self.iterate_self(self.json):
